@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>title</title>
+        <style>
+            div {
+                border: 1px solid #ccc;
+                margin: 1em 0;
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body ng-app="test">
+
+        <select ng-model="focus" ng-controller="switcher">
+            <option>one</option>
+            <option>two</option>
+            <option>three</option>
+            <option>four</option>
+        </select>
+
+        <div focus-target="'one'">
+            one
+            <input focus-initial/>
+            <input />
+        </div>
+        <div focus-target="'two'">
+            two
+            <input focus-initial/>
+            <input />
+        </div>
+        <div focus-target="'three'">
+            three
+            <input focus-initial/>
+            <input />
+        </div>
+
+        <input focus-target="'four'" value="four" />
+        <input />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.2/angular.min.js"></script>
+        <script src="angular-focus.js"></script>
+        <script>
+
+            var m = angular.module("test", ["focus"]);
+
+            m.controller("switcher", function($scope, focus) {
+                $scope.focus = null;
+                $scope.$watch("focus", function(name) {
+                    focus.target(name);
+                });
+                $scope.$on("focus:target", function(ev, name) {
+                    $scope.focus = name;
+                });
+            });
+
+        </script>
+    </body>
+</html>
